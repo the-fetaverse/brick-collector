@@ -1,0 +1,22 @@
+<div class="tile is-ancestor">
+  <div class="tile is-parent" *ngFor="let card of cards">
+    <div class="tile is-child card">
+      <a routerLink="{{ card.link }}">
+        <div class="card-image has-text-centered">
+          <figure class="image is-128x128 is-inline-block">
+            <img
+              src="{{ card.img }}"
+              alt="{{ card.title }}"
+              style="margin-top: 25px"
+            />
+          </figure>
+        </div>
+        <div class="card-content has-text-centered">
+          <div class="content">
+            <p class="title">{{ card.title }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
