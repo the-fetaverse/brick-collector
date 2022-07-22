@@ -14,8 +14,8 @@ import { Router } from '@angular/router';
 export class SearchComponent implements OnInit {
   searchDetail!: FormGroup;
   setObj: LegoSet = new LegoSet();
+  setList: LegoSet[] = [];
   codeList: string[] = [];
-  imgList: string = '';
   iconSave = faSave;
   isAlert: boolean = false;
 
@@ -37,31 +37,35 @@ export class SearchComponent implements OnInit {
   }
 
   searchSet() {
+    console.log(this.setObj.name);
+    this.setObj.name = '';
     this.setObj.name = this.searchDetail.value.name;
     if (this.setObj.name.length === 0) {
       this.setObj.name = '';
       this.isAlert = true;
     }
     this.ajaxService.searchAPI(this.setObj).subscribe((res) => {
-      if (res.length === 0) {
+      if (res.count === 0) {
         this.setObj.name = '';
         this.isAlert = true;
       }
-      res.map((item) => {
-        this.codeList.push(item.code);
-        this.setObj.name = item.name;
-        this.setObj.year = item.year;
-        this.setObj.num_parts = item.num_parts;
-        this.getImages();
-        console.log(this.setObj);
-      });
+      res.results.map(
+        (item: {
+          name: string;
+          year: number;
+          set_img_url: string;
+          num_parts: number;
+          set_num: string;
+        }) => {
+          this.setObj.name = item.name;
+          this.setObj.year = item.year;
+          this.setObj.img = item.set_img_url;
+          this.setObj.num_parts = item.num_parts;
+          this.setObj.code = item.set_num;
+        }
+      );
     });
-  }
-
-  getImages() {
-    this.ajaxService.getImg(this.codeList[0]).subscribe((res) => {
-      this.setObj.img = res.set_img_url;
-    });
+    this.searchDetail.reset();
   }
 
   addSet() {

@@ -10,20 +10,24 @@ export class AjaxService {
   headers = new HttpHeaders()
     .set('Accept', 'application/json')
     .set('Authorization', 'key 12e18d8e7af435397122373eed699382');
-  dbURL: string;
-  imgURL: string;
+  baseURL: string;
 
   constructor(private ajax: HttpClient) {
-    this.dbURL = 'http://localhost:8080/brick-collector-webapp/lego-db';
-    this.imgURL = 'https://rebrickable.com/api/v3/lego/sets/';
+    this.baseURL = 'https://rebrickable.com/api/v3/lego/sets/?search=';
   }
 
-  searchAPI(set: LegoSet): Observable<LegoSet[]> {
-    return this.ajax.get<LegoSet[]>(`${this.dbURL}/${set.name}`);
-  }
-
-  getImg(code: string): Observable<any> {
-    return this.ajax.get<any>(`${this.imgURL}/${code}`, {
+  searchAPI(set: LegoSet): Observable<any> {
+    let words: string[] = [];
+    words = set.name.split(' ');
+    let URL: string = '';
+    if (words.length === 1) {
+      URL = `${this.baseURL}${words[0]}`;
+    } else if (words.length === 2) {
+      URL = `${this.baseURL}${words[0]}%20${words[1]}`;
+    } else {
+      URL = `${this.baseURL}${words[0]}%20${words[1]}%20${words[2]}`;
+    }
+    return this.ajax.get<any>(URL, {
       headers: this.headers,
     });
   }

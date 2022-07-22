@@ -101,20 +101,4 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-
-  // searchSet() {
-  //   this.setObj.name = this.setDetail.value.name;
-  //   this.ajaxService.searchAPI(this.setObj).subscribe((res) => {
-  //     res.map((item) => {
-  //       this.codeList.push(item.code);
-  //     });
-  //   });
-  //   console.log(this.codeList);
-  // }
-
-  // getImages() {
-  //   this.ajaxService
-  //     .getImg(this.codeList[0])
-  //     .subscribe((res) => console.log(res));
-  // }
 }
