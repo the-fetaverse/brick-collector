@@ -3,5 +3,6 @@ export class LegoSet {
   name: string = '';
   year: number = 2000;
   img: string = '';
-  theme: string = '';
+  num_parts: number = 0;
+  code: string = '';
 }

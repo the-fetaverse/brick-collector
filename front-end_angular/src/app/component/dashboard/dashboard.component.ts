@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   setDetail!: FormGroup;
   setObj: LegoSet = new LegoSet();
   legoSetList: LegoSet[] = [];
+  codeList: string[] = [];
   iconEdit = faEdit;
   iconDelete = faTrash;
   isAlert: boolean = false;
@@ -31,14 +32,15 @@ export class DashboardComponent implements OnInit {
       id: [''],
       name: [''],
       year: [''],
-      theme: [''],
+      num_parts: [''],
+      code: [''],
     });
   }
 
   addSet() {
     this.setObj.name = this.setDetail.value.name;
     this.setObj.year = this.setDetail.value.year;
-    this.setObj.theme = this.setDetail.value.theme;
+    this.setObj.num_parts = this.setDetail.value.num_parts;
 
     this.legoService.addSet(this.setObj).subscribe(
       (res) => {
@@ -66,14 +68,14 @@ export class DashboardComponent implements OnInit {
     this.setDetail.controls['id'].setValue(set.id);
     this.setDetail.controls['name'].setValue(set.name);
     this.setDetail.controls['year'].setValue(set.year);
-    this.setDetail.controls['theme'].setValue(set.theme);
+    this.setDetail.controls['num_parts'].setValue(set.num_parts);
   }
 
   updateSet() {
     this.setObj.id = this.setDetail.value.id;
     this.setObj.name = this.setDetail.value.name;
     this.setObj.year = this.setDetail.value.year;
-    this.setObj.theme = this.setDetail.value.theme;
+    this.setObj.num_parts = this.setDetail.value.num_parts;
 
     this.legoService.updateSet(this.setObj).subscribe(
       (res) => {
@@ -98,12 +100,5 @@ export class DashboardComponent implements OnInit {
         console.log(err);
       }
     );
-  }
-
-  searchSet() {
-    this.setObj.name = this.setDetail.value.name;
-    this.ajaxService
-      .searchAPI(this.setObj)
-      .subscribe((res) => console.log(res));
   }
 }
