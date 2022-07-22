@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./alert.component.css'],
 })
 export class AlertComponent {
-  message: string = 'Set deleted successfuly';
+  message: string = '';
 
   constructor() {}
 
