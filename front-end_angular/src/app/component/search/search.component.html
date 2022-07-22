@@ -1,0 +1,76 @@
+<div class="container">
+  <!-- Search Form -->
+  <div class="row">
+    <div
+      class="col-3"
+      id="searchSetForm"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <h5 class="modal-title" id="exampleModalLabel">Search Set</h5>
+
+      <form [formGroup]="searchDetail">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Name </label>
+          <input
+            type="text"
+            formControlName="name"
+            class="form-control"
+            id="name"
+            aria-describedby="emailHelp"
+          />
+        </div>
+
+        <button type="button" class="btn btn-primary" (click)="searchSet()">
+          Search Set
+        </button>
+      </form>
+    </div>
+
+    <!-- Result Cards -->
+    <div class="col-9">
+      <div class="container text-center">
+        <div class="row justify-content-evenly">
+          <div
+            class="card col-3"
+            style="width: 18rem"
+            *ngFor="let legoSet of setList"
+          >
+            <div *ngIf="legoSet.img" class="card-header text-center">
+              <img
+                src="{{ legoSet.img }}"
+                class="card-img-top"
+                alt="{{ legoSet.name }}"
+              />
+            </div>
+            <div *ngIf="!legoSet.img" class="card-header text-center">
+              <img
+                src="../../../assets/yellowBrick.png"
+                class="card-img-top"
+                alt="no image available"
+              />
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">{{ legoSet.name }}</h5>
+              <p class="card-text">{{ legoSet.year }}</p>
+              <p class="card-text">{{ legoSet.theme }}</p>
+            </div>
+
+            <div class="card-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#editSetModal"
+                (click)="searchSet()"
+              >
+                <fa-icon [icon]="iconSave"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
