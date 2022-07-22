@@ -1,14 +1,11 @@
 <div class="container">
-  <!-- Search Form -->
   <div class="row">
-    <div
-      class="col-3"
-      id="searchSetForm"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <h5 class="modal-title" id="exampleModalLabel">Search Set</h5>
+    <!-- Alert -->
+    <alert *ngIf="isAlert"></alert>
 
+    <!-- Search From -->
+    <div id="searchForm" class="col-3">
+      <h5>Search Set</h5>
       <form [formGroup]="searchDetail">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Name </label>
@@ -17,7 +14,6 @@
             formControlName="name"
             class="form-control"
             id="name"
-            aria-describedby="emailHelp"
           />
         </div>
 
@@ -27,23 +23,19 @@
       </form>
     </div>
 
-    <!-- Result Cards -->
+    <!-- Card Results -->
     <div class="col-9">
-      <div class="container text-center">
+      <div class="container text-center" *ngIf="setObj.name">
         <div class="row justify-content-evenly">
-          <div
-            class="card col-3"
-            style="width: 18rem"
-            *ngFor="let legoSet of setList"
-          >
-            <div *ngIf="legoSet.img" class="card-header text-center">
+          <div class="card col-3" style="width: 18rem">
+            <div *ngIf="setObj.img" class="card-header text-center">
               <img
-                src="{{ legoSet.img }}"
+                src="{{ setObj.img }}"
                 class="card-img-top"
-                alt="{{ legoSet.name }}"
+                alt="{{ setObj.name }}"
               />
             </div>
-            <div *ngIf="!legoSet.img" class="card-header text-center">
+            <div *ngIf="!setObj.img" class="card-header text-center">
               <img
                 src="../../../assets/yellowBrick.png"
                 class="card-img-top"
@@ -52,20 +44,14 @@
             </div>
 
             <div class="card-body">
-              <h5 class="card-title">{{ legoSet.name }}</h5>
-              <p class="card-text">{{ legoSet.year }}</p>
-              <p class="card-text">{{ legoSet.theme }}</p>
+              <h5 class="card-title">{{ setObj.name }}</h5>
+              <p class="card-text">{{ setObj.year }}</p>
+              <p class="card-text">{{ setObj.num_parts }} parts</p>
             </div>
 
             <div class="card-footer">
-              <button
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#editSetModal"
-                (click)="searchSet()"
-              >
-                <fa-icon [icon]="iconSave"></fa-icon>
+              <button type="button" class="btn btn-success" (click)="addSet()">
+                <fa-icon [icon]="iconSave"></fa-icon> Save
               </button>
             </div>
           </div>
